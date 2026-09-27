@@ -3,16 +3,81 @@
   "night_run_at": null,
   "morning_run_at": null,
   "new_firms_tonight": 0,
-  "drafts_ready": [],
+  "drafts_ready": [
+    {
+      "firm": "JCR Inspection Services, Inc.",
+      "to": "juan@jcrinspection.com",
+      "subject": "LA permits at plan check, with the engineer of record",
+      "viewUrl": "https://mail.google.com/mail/?authuser=kheizaran.karampoor@gmail.com#all?compose=thread-f:1877479014270318328%2Bmsg-a:r-5534424545138286885",
+      "draft_id": "r-5534424545138286885"
+    },
+    {
+      "firm": "SoCal Special Inspections",
+      "to": "brath@socalspecialinspections.com",
+      "subject": "LA permits at plan check, with the engineer of record",
+      "viewUrl": "https://mail.google.com/mail/?authuser=kheizaran.karampoor@gmail.com#all?compose=thread-f:1877479014829639632%2Bmsg-a:r-3222894496348160902",
+      "draft_id": "r-3222894496348160902"
+    },
+    {
+      "firm": "Elite Special Inspections, Inc.",
+      "to": "EliteDeputy@gmail.com",
+      "subject": "LA permits at plan check, with the engineer of record",
+      "viewUrl": "https://mail.google.com/mail/?authuser=kheizaran.karampoor@gmail.com#all?compose=thread-f:1877479015015073829%2Bmsg-a:r5793266300997331663",
+      "draft_id": "r5793266300997331663"
+    },
+    {
+      "firm": "K-Special Inspection, Inc.",
+      "to": "kspecialinspection30@gmail.com",
+      "subject": "LA permits at plan check, with the engineer of record",
+      "viewUrl": "https://mail.google.com/mail/?authuser=kheizaran.karampoor@gmail.com#all?compose=thread-f:1877479016180516835%2Bmsg-a:r-4003208264413364786",
+      "draft_id": "r-4003208264413364786"
+    },
+    {
+      "firm": "Archuleta Inspections, Inc.",
+      "to": "ArchuletaInspections@gmail.com",
+      "subject": "LA permits at plan check, with the engineer of record",
+      "viewUrl": "https://mail.google.com/mail/?authuser=kheizaran.karampoor@gmail.com#all?compose=thread-f:1877479016681364649%2Bmsg-a:r2856362503666791507",
+      "draft_id": "r2856362503666791507"
+    },
+    {
+      "firm": "SL Inspection Services, Inc.",
+      "to": "sl.inspection@gmail.com",
+      "subject": "LA permits at plan check, with the engineer of record",
+      "viewUrl": "https://mail.google.com/mail/?authuser=kheizaran.karampoor@gmail.com#all?compose=thread-f:1877479017572483184%2Bmsg-a:r7044667218903449950",
+      "draft_id": "r7044667218903449950"
+    },
+    {
+      "firm": "Axiom Inspection Services, Inc.",
+      "to": "admin@goaxiom.com",
+      "subject": "LA permits at plan check, with the engineer of record",
+      "viewUrl": "https://mail.google.com/mail/?authuser=kheizaran.karampoor@gmail.com#all?compose=thread-f:1877479017773254531%2Bmsg-a:r-7036352460891086403",
+      "draft_id": "r-7036352460891086403"
+    },
+    {
+      "firm": "Advantage Special Inspection Inc.",
+      "to": "support@advantagesi.com",
+      "subject": "LA permits at plan check, with the engineer of record",
+      "viewUrl": "https://mail.google.com/mail/?authuser=kheizaran.karampoor@gmail.com#all?compose=thread-f:1877479018208844237%2Bmsg-a:r1032966650171590881",
+      "draft_id": "r1032966650171590881"
+    },
+    {
+      "firm": "Los Angeles Deputy Special Inspection",
+      "to": "info@losangelesdeputyspecialinspection.com",
+      "subject": "LA permits at plan check, with the engineer of record",
+      "viewUrl": "https://mail.google.com/mail/?authuser=kheizaran.karampoor@gmail.com#all?compose=thread-f:1877479019162017844%2Bmsg-a:r6734223331722805027",
+      "draft_id": "r6734223331722805027"
+    }
+  ],
   "replies_waiting": [],
   "export_latest_name": "Central Control.xlsx (audit pack, 2026-09-27)",
   "export_latest_date": "2026-09-18",
   "export_note": "Live list refreshed Sep 18; filings Jan 2-16 only; web search run on 30 of 278. Team is re-running enrichment.",
   "owner_actions": [
+    "You: add the Gmail and Google Drive connectors to both routines (Night shift, Morning shift) in claude.ai Routines. Until then they run without Gmail/Drive and will only write drafts to the repo.",
     "Ali: buy aifirst-solutions.com and getaifirstsolutions.com, set up Workspace + SPF/DKIM/DMARC (asked 2026-09-22, no reply yet).",
     "Ali: white-label copy of the platform without the customer name in the URL.",
     "Team: re-extract from July 1 with a high limit, run bulk LADBS roles and bulk web search on all, export Excel, upload to Drive folder dejavu-samples.",
-    "You: send tonight's drafts from Gmail (10-20 a day). Say GO SEND here when you want this automated."
+    "You: send the 9 drafts below from Gmail (open each, check, send). Dates for follow-ups are set from today; the night job drafts follow-up 1 once it sees a sent message."
   ],
   "sending_mode": "drafts only"
 }

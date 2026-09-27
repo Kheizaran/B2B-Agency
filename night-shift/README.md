@@ -6,6 +6,8 @@ Read this whole file, then `pitch/messaging.md`, then `buyers.csv`, before doing
 
 ## Setup at the start of every run
 
+If `/home/user/B2B-Agency` does not exist, attach the repo first: call `mcp__Claude_Code_Remote__add_repo` with owner `kheizaran`, repo `b2b-agency`, access `push`, run the clone command it returns into `/home/user/B2B-Agency`, then call `mcp__Claude_Code_Remote__register_repo_root`.
+
 ```
 cd /home/user/B2B-Agency
 git fetch origin claude/customer-acquisition-strategy-rn7eod
@@ -43,7 +45,8 @@ Goal: every LA and Orange County special/deputy inspection agency, verified, in 
 5. Also fill missing emails for existing A rows where `email` is empty, if you can find one on the firm's own site. Note the page it came from in `notes`.
 
 ### Part 2 — drafter (cap: 15 drafts per night)
-1. Select rows where `status=new`, tier A or B, and `email` is non-empty. Order by score desc, then id.
+If the Gmail tools (`mcp__Gmail__*`) are not available in this session, write each draft as a section in `outbox/YYYY-MM-DD.md` (to, subject, full body) instead, leave `status=new`, and add an owner action saying Gmail is not connected to the routine.
+1. Select rows where `status=new`, tier A, and `email` is non-empty, and whose `notes` do not contain "HELD". Order by score desc, then id. Tier B stays held until the first row reaches `status=pilot`; after that, include tier B.
 2. For each, write a first-touch email from `pitch/messaging.md`. Fill `{one_true_fact_from_notes}` only from `notes`; if there is no usable fact, drop that sentence. Respect every hard rule.
 3. Create a Gmail draft with `mcp__Gmail__create_draft` (to: the email, subject and plain `body` only). Record the returned `id` and `viewUrl`.
 4. Update the row: `status=drafted`, `first_touch_date` = today (Tehran), `followup1_date` = today+4, `followup2_date` = today+9, `draft_ids` = draft id.
