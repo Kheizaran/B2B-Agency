@@ -16,6 +16,8 @@ git checkout -B claude/customer-acquisition-strategy-rn7eod origin/claude/custom
 
 Work only on this branch. At the end, commit with a clear message and `git push -u origin claude/customer-acquisition-strategy-rn7eod`. If the push is rejected, `git pull --rebase origin claude/customer-acquisition-strategy-rn7eod` and push again. Never force-push.
 
+**The push is not optional.** Everything you change (buyers.csv, state.json, log.md, outbox) is lost if it is not pushed; the 2026-09-27 test run lost its work this way. Commit and push right after the list builder, again after the drafter, and at the end. If a push fails twice, paste the exact error into `state.json` → `owner_actions` as «push failed: <error>» and republish the dashboard so the owner sees it.
+
 ## Files
 
 | File | What it is | Who writes it |

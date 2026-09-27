@@ -24,7 +24,7 @@ Sources for everything below: Drive docs «2026-09-27 DM sales handover» and «
 - «ممنون» alone, hearts, «Done», media only → no reply. Spam: le454554.
 - Money-blocked or distressed → warm, practical, no pitch. Criticism → thank, concede honestly, go deeper, no pitch.
 - Asked "are you an AI?" → yes, honestly: it's Kheizaran's AI employee, the same kind the course builds; offer the owner in person.
-- Connectors, as taught in the course: Gmail, Google Drive, Calendar, Notion and Slack connect in a few clicks. WhatsApp and personal Telegram have no connector (content is copied in by hand). Instagram DMs work only through an intermediary, and the instructor stopped his because of account risk. Company CRM/ERP needs custom work from the agency (flag as an agency lead). No n8n, no code. See section 5 for the open conflict with the earlier rule.
+- Connectors (owner confirmed 2026-09-27, overrides the chapter 5 transcript): AI employees connect to Instagram, WhatsApp, Telegram, Gmail, Drive, Calendar, Notion, Slack, Sheets, Odoo, Jira and similar through connectors. You may say so plainly. No n8n, no code. Company-specific CRM/ERP work beyond ready connectors → offer the agency (flag as an agency lead).
 - Links allowed: https://kheizaran.com/new-landing-agent/ · file: https://t.me/Kheizaran_Kp/508 · course files channel for buyers: https://t.me/AiiFirst1
 
 ## 2. Threads the owner handles (never send)
@@ -58,12 +58,12 @@ Each line: the claim, the evidence (counts with denominators and dates), and a s
 
 ## 5. Open questions for the owner
 
-- Price consistency: messages from the account have quoted ۵ (promo, ended 31 Shahrivar), ۳ (to nastaran_tahani), ۱۰ million toman, USD 50 and EUR 40. The replier quotes only ۱۰ million. Is that still right?
 - Should the "are you an AI?" answer always offer a direct chat with the owner?
 
-- **Conflict to resolve:** the 2026-09-27 handover says AI employees connect to Instagram, WhatsApp, Telegram, Odoo and Jira («owner confirmed»). The course transcripts (chapter 5) say WhatsApp and personal Telegram have no connector and Instagram DMs were stopped for account risk. Replies sent earlier today told people the connections exist. Which one should the replier say? Until answered, it follows the course.
+- (resolved 2026-09-27) Price is ۱۰ million toman; connectors to Instagram, WhatsApp and Telegram work (owner turned them on).
 
 ## 6. Changelog
 
 - 2026-09-27: file created from the handover and full report; stages and evidence format added.
 - 2026-09-27: course facts file added from the six chapter transcripts. Rules corrected: Artifacts and Claude Design are in the course; rendering, image/video generation and production apps are not; connector claims now follow chapter 5, with the conflict listed in section 5.
+- 2026-09-27: owner answered: price stays ۱۰ million toman; connections to Instagram, WhatsApp, Telegram and others work. Connector rule updated.

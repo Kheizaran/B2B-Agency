@@ -73,7 +73,7 @@
   "export_latest_date": "2026-09-18",
   "export_note": "Live list refreshed Sep 18; filings Jan 2-16 only; web search run on 30 of 278. Team is re-running enrichment.",
   "owner_actions": [
-    "You: add the Gmail and Google Drive connectors to both routines (Night shift, Morning shift) in claude.ai Routines. Until then they run without Gmail/Drive and will only write drafts to the repo.",
+    "You: the emails the night run found for Deputy 1, Sigala and Structural Observation Group came from web search, not the firms' own pages. Glance at them before the drafts go out tonight.",
     "Ali: buy aifirst-solutions.com and getaifirstsolutions.com, set up Workspace + SPF/DKIM/DMARC (asked 2026-09-22, no reply yet).",
     "Ali: white-label copy of the platform without the customer name in the URL.",
     "Team: re-extract from July 1 with a high limit, run bulk LADBS roles and bulk web search on all, export Excel, upload to Drive folder dejavu-samples.",
