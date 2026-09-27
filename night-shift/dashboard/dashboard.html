@@ -1,0 +1,187 @@
+<title>Permit Pipeline</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F2F4F6; --surface:#FFFFFF; --surface-2:#E9EDF0; --text:#172026; --muted:#5B6B76; --line:#D6DDE3;
+  --accent:#1F5FA8; --accent-ink:#FFFFFF; --good:#2E7D4F; --warn:#B8770F; --bad:#B3261E; --info:#4B5D6B;
+  --good-bg:#E3F1E8; --warn-bg:#FBEFD9; --bad-bg:#F9E3E1; --info-bg:#E6EBEF; --accent-bg:#E0EAF6;
+  --radius:6px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0F1519; --surface:#17202A; --surface-2:#1F2A35; --text:#E6EBEF; --muted:#93A1AB; --line:#2A3640;
+  --accent:#6FA8E8; --accent-ink:#0F1519; --good:#7BC494; --warn:#E3B04B; --bad:#EF8A80; --info:#A7B6C2;
+  --good-bg:#1B3325; --warn-bg:#3A2E12; --bad-bg:#3E1C19; --info-bg:#22303A; --accent-bg:#1C2F45;
+  color-scheme: dark; } }
+:root[data-theme="dark"]{
+  --bg:#0F1519; --surface:#17202A; --surface-2:#1F2A35; --text:#E6EBEF; --muted:#93A1AB; --line:#2A3640;
+  --accent:#6FA8E8; --accent-ink:#0F1519; --good:#7BC494; --warn:#E3B04B; --bad:#EF8A80; --info:#A7B6C2;
+  --good-bg:#1B3325; --warn-bg:#3A2E12; --bad-bg:#3E1C19; --info-bg:#22303A; --accent-bg:#1C2F45;
+  color-scheme: dark; }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif;padding-block:0 40px;padding-inline:16px}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:14px 0 10px;margin-bottom:18px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:baseline}
+h1{font:700 26px/1.1 "IBM Plex Sans Condensed",sans-serif;margin:0;letter-spacing:.01em;text-wrap:balance}
+h2{font:600 17px/1.2 "IBM Plex Sans Condensed",sans-serif;margin:0 0 10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.stamp{font:500 13px "IBM Plex Mono",monospace;color:var(--muted)}
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.card.alert{border-left:5px solid var(--bad)}
+.card.act{border-left:5px solid var(--accent)}
+ul{margin:0;padding-left:18px} li{margin:6px 0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:18px 0}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px}
+.kpi-v{font:600 28px/1 "IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.kpi-l{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:6px}
+.kpi-s{font-size:12px;color:var(--muted)}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:500;white-space:nowrap;border:1px solid transparent}
+.pill-good{background:var(--good-bg);color:var(--good)} .pill-warn{background:var(--warn-bg);color:var(--warn)}
+.pill-bad{background:var(--bad-bg);color:var(--bad)} .pill-info{background:var(--info-bg);color:var(--info)}
+.pill-accent{background:var(--accent-bg);color:var(--accent)} .pill-muted{background:var(--surface-2);color:var(--muted)}
+.tier{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:4px;font:600 12px "IBM Plex Mono",monospace}
+.tier-A{background:var(--accent);color:var(--accent-ink)} .tier-B{background:var(--surface-2);color:var(--text)} .tier-C{background:var(--surface-2);color:var(--muted)}
+.muted{color:var(--muted)} .small{font-size:12.5px} .mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.filters button{background:var(--surface-2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font:500 13px "IBM Plex Sans",sans-serif;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:900px;font-size:13.5px}
+th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:10px 10px;border-bottom:1px solid var(--line);background:var(--surface-2);position:sticky;top:0}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr[hidden]{display:none}
+.firm{font-weight:500} .notes{max-width:340px;color:var(--muted)}
+.log{font-size:13px} .log h3{font:600 14px "IBM Plex Sans Condensed",sans-serif;margin:12px 0 4px}
+.log ul{color:var(--muted)}
+footer{margin-top:24px;color:var(--muted);font-size:12.5px}
+@media (prefers-reduced-motion: no-preference){ .filters button{transition:background .15s} }
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Permit Pipeline</h1>
+  <span class="stamp">Sun 27 Sep 2026 · 13:32 Tehran</span>
+  <span class="stamp">night run: not yet · morning run: not yet</span>
+  <span class="pill pill-warn">sending: drafts only</span>
+</header>
+
+<section class="grid grid-2">
+  <div class="card alert">
+    <h2>Only you can do these</h2>
+    <ul><li>Ali: buy aifirst-solutions.com and getaifirstsolutions.com, set up Workspace + SPF/DKIM/DMARC (asked 2026-09-22, no reply yet).</li><li>Ali: white-label copy of the platform without the customer name in the URL.</li><li>Team: re-extract from July 1 with a high limit, run bulk LADBS roles and bulk web search on all, export Excel, upload to Drive folder dejavu-samples.</li><li>You: send tonight&#x27;s drafts from Gmail (10-20 a day). Say GO SEND here when you want this automated.</li></ul>
+    <p style="margin:10px 0 0"><span class="pill pill-warn">Enriched export: 2026-09-18 · 9 days old</span> <span class="muted small">Live list refreshed Sep 18; filings Jan 2-16 only; web search run on 30 of 278. Team is re-running enrichment.</span></p>
+  </div>
+  <div class="card act">
+    <h2>Drafts ready to send · 0</h2>
+    <p class="muted">No drafts waiting. The night job creates them at 01:00 Tehran.</p>
+    
+  </div>
+  <div class="card act">
+    <h2>Replies waiting · 0</h2>
+    <p class="muted">No new replies. The morning job checks Gmail at 07:00 Tehran.</p>
+  </div>
+  <div class="card">
+    <h2>LinkedIn today · 10 of 10</h2>
+    <p class="small muted" style="margin:0 0 8px">Send the connection note from the 2026-09-27 drafts doc. Verify the profile in-app first. Space 3+ days from the email touch.</p>
+    <ol><li><a href="https://www.linkedin.com/in/juan-carlos-ramos-34414827" target="_blank" rel="noopener">Juan Carlos Ramos</a> <span class="muted">· JCR Inspection Services, Inc., Glendale</span></li><li><a href="https://www.linkedin.com/in/elite-special-inspection" target="_blank" rel="noopener">Randy Martinez</a> <span class="muted">· Elite Special Inspections, Inc., Downey</span></li><li><a href="https://www.linkedin.com/in/se-jamie-shim-36292347" target="_blank" rel="noopener">Se (Jamie) Shim</a> <span class="muted">· K-Special Inspection, Inc., Long Beach</span></li><li><a href="https://www.linkedin.com/in/chad-brummel-b4142b165" target="_blank" rel="noopener">Chad Brummel</a> <span class="muted">· Deputy 1 Inspection Service, Inc., Irvine</span></li><li><a href="https://www.linkedin.com/in/travis-archuleta-a1a022185" target="_blank" rel="noopener">Travis Archuleta</a> <span class="muted">· Archuleta Inspections, Inc., Glendora</span></li><li><a href="https://www.linkedin.com/in/edwin-jimenez-1a2965196" target="_blank" rel="noopener">Edwin Jimenez</a> <span class="muted">· ERJ Inspections, Inc., Santa Ana</span></li><li><a href="https://www.linkedin.com/in/grace-inspection-and-testing-511840276" target="_blank" rel="noopener">Wahba Isaac</a> <span class="muted">· Grace Inspection &amp; Testing, Inc., Cypress</span></li><li><a href="https://www.linkedin.com/in/raymundomachado" target="_blank" rel="noopener">Ray Machado</a> <span class="muted">· Axiom Inspection Services, Inc., Long Beach</span></li><li><a href="https://www.linkedin.com/in/nathan-haley-58626951" target="_blank" rel="noopener">Nathan Haley</a> <span class="muted">· Magnum Deputy Inspections, Inc., Pasadena</span></li><li><a href="https://www.linkedin.com/in/darren-lettermam-aaa045125" target="_blank" rel="noopener">Darren Lettermam</a> <span class="muted">· DRL Inspection Services, Huntington Beach</span></li></ol>
+  </div>
+</section>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-v">36</div><div class="kpi-l">Firms in play</div><div class=kpi-s>21 A · 15 B</div></div>
+  <div class="kpi"><div class="kpi-v">17</div><div class="kpi-l">With an email</div><div class=kpi-s>19 still to find</div></div>
+  <div class="kpi"><div class="kpi-v"></div><div class="kpi-l">Drafted</div></div>
+  <div class="kpi"><div class="kpi-v"></div><div class="kpi-l">Touched</div><div class=kpi-s>sent or later</div></div>
+  <div class="kpi"><div class="kpi-v"></div><div class="kpi-l">Replied</div></div>
+  <div class="kpi"><div class="kpi-v"></div><div class="kpi-l">Sample asks</div></div>
+  <div class="kpi"><div class="kpi-v"></div><div class="kpi-l">Pilots</div></div>
+</div>
+
+<section class="card">
+  <h2>Pipeline · 36 firms</h2>
+  <div class="filters" id="filters">
+    <button type="button" data-f="all" aria-pressed="true">All</button>
+    <button type="button" data-f="tier:A" aria-pressed="false">Tier A</button>
+    <button type="button" data-f="tier:B" aria-pressed="false">Tier B</button>
+    <button type="button" data-f="status:new" aria-pressed="false">New</button>
+    <button type="button" data-f="status:drafted" aria-pressed="false">Draft ready</button>
+    <button type="button" data-f="status:sent" aria-pressed="false">Sent</button>
+    <button type="button" data-f="replied" aria-pressed="false">Replied</button>
+  </div>
+  <div class="tablewrap">
+  <table id="pipe">
+    <thead><tr><th>#</th><th>Firm</th><th>Tier</th><th>Contact</th><th>Email</th><th>Status</th><th>First touch</th><th>Notes</th></tr></thead>
+    <tbody>
+<tr data-tier="A" data-status="new"><td class="mono">1</td><td><div class="firm">JCR Inspection Services, Inc.</div><div class="muted small">Glendale</div></td><td><span class="tier tier-A">A</span> <span class="mono small">6</span></td><td>Juan Carlos Ramos<div class="muted small">Owner</div></td><td class="small">juan@jcrinspection.com <a href="https://www.linkedin.com/in/juan-carlos-ramos-34414827" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Founded 2003; deputy inspector since 1994. Coordinate email and LinkedIn touches 3+ days apart.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">3</td><td><div class="firm">Elite Special Inspections, Inc.</div><div class="muted small">Downey</div></td><td><span class="tier tier-A">A</span> <span class="mono small">6</span></td><td>Randy Martinez<div class="muted small">Owner / Deputy Special Inspector</div></td><td class="small">EliteDeputy@gmail.com <a href="https://www.linkedin.com/in/elite-special-inspection" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Since 1994. LADBS, LA County, OC, Newport Beach. Residential + commercial structural. Profile branded as company.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">4</td><td><div class="firm">K-Special Inspection, Inc.</div><div class="muted small">Long Beach</div></td><td><span class="tier tier-A">A</span> <span class="mono small">6</span></td><td>Se (Jamie) Shim<div class="muted small">Business Owner</div></td><td class="small">kspecialinspection30@gmail.com <a href="https://www.linkedin.com/in/se-jamie-shim-36292347" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Since 1993. LA City/County, Long Beach, OC, San Diego, San Bernardino.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">6</td><td><div class="firm">Archuleta Inspections, Inc.</div><div class="muted small">Glendora</div></td><td><span class="tier tier-A">A</span> <span class="mono small">6</span></td><td>Travis Archuleta<div class="muted small">Owner</div></td><td class="small">ArchuletaInspections@gmail.com <a href="https://www.linkedin.com/in/travis-archuleta-a1a022185" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Founded 1990. Residential/commercial structural mix, FRP, fire. OC approved list 2026.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">10</td><td><div class="firm">Axiom Inspection Services, Inc.</div><div class="muted small">Long Beach</div></td><td><span class="tier tier-A">A</span> <span class="mono small">6</span></td><td>Ray Machado<div class="muted small">President / Deputy Inspector</div></td><td class="small">admin@goaxiom.com <a href="https://www.linkedin.com/in/raymundomachado" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Covers LA City/County, Santa Monica, Long Beach, Glendale, OC.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">2</td><td><div class="firm">SoCal Special Inspections</div><div class="muted small">Garden Grove</div></td><td><span class="tier tier-A">A</span> <span class="mono small">5</span></td><td>Billy Rath<div class="muted small">Founder</div></td><td class="small">brath@socalspecialinspections.com </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Email from site contact page; VERIFY before use. No LinkedIn profile found.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">19</td><td><div class="firm">Fisher Inspection Services</div><div class="muted small">Northridge</div></td><td><span class="tier tier-A">A</span> <span class="mono small">5</span></td><td>Matthew Fisher<div class="muted small">Vice President</div></td><td class="small">— <a href="https://www.linkedin.com/in/matthewfisher81" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">LA and Ventura counties. Posts about jobsites (Jordan Downs). Email unknown.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">5</td><td><div class="firm">Deputy 1 Inspection Service, Inc.</div><div class="muted small">Irvine</div></td><td><span class="tier tier-A">A</span> <span class="mono small">4</span></td><td>Chad Brummel<div class="muted small">President</div></td><td class="small">— <a href="https://www.linkedin.com/in/chad-brummel-b4142b165" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Email unknown: list builder to find. Do not target Carol Brummel (role ended Sep 2025).</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">7</td><td><div class="firm">ERJ Inspections, Inc.</div><div class="muted small">Santa Ana</div></td><td><span class="tier tier-A">A</span> <span class="mono small">4</span></td><td>Edwin Jimenez<div class="muted small">Business Owner</div></td><td class="small">— <a href="https://www.linkedin.com/in/edwin-jimenez-1a2965196" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">VERIFY profile URL (came from a search summary). Email unknown.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">8</td><td><div class="firm">SL Inspection Services, Inc.</div><div class="muted small">Diamond Bar</div></td><td><span class="tier tier-A">A</span> <span class="mono small">4</span></td><td>Stephen Lai<div class="muted small">Owner</div></td><td class="small">sl.inspection@gmail.com </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">No LinkedIn match. Email is the path.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">9</td><td><div class="firm">Grace Inspection &amp; Testing, Inc.</div><div class="muted small">Cypress</div></td><td><span class="tier tier-A">A</span> <span class="mono small">4</span></td><td>Wahba Isaac<div class="muted small">Owner</div></td><td class="small">— <a href="https://www.linkedin.com/in/grace-inspection-and-testing-511840276" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Profile branded as company. Email unknown. Hiring ICC soils inspectors (Aug 2026).</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">11</td><td><div class="firm">Magnum Deputy Inspections, Inc.</div><div class="muted small">Pasadena</div></td><td><span class="tier tier-A">A</span> <span class="mono small">4</span></td><td>Nathan Haley<div class="muted small">Owner / Deputy Inspector</div></td><td class="small">— <a href="https://www.linkedin.com/in/nathan-haley-58626951" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Veteran-owned, 15+ years LA/OC. Deann Haley listed as CEO in filings. Email unknown.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">12</td><td><div class="firm">DRL Inspection Services</div><div class="muted small">Huntington Beach</div></td><td><span class="tier tier-A">A</span> <span class="mono small">4</span></td><td>Darren Lettermam<div class="muted small">President and CEO</div></td><td class="small">— <a href="https://www.linkedin.com/in/darren-lettermam-aaa045125" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Spell surname exactly Lettermam. Email unknown.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">14</td><td><div class="firm">Structural Observation Group, Inc.</div><div class="muted small">Huntington Beach</div></td><td><span class="tier tier-A">A</span> <span class="mono small">4</span></td><td>John Laramie<div class="muted small">Vice President</div></td><td class="small">— <a href="https://www.linkedin.com/in/john-laramie-647836100" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">FIT CHECK: confirm they want outbound leads. Commercial work (South Coast Plaza, Greek Theatre). Email unknown.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">15</td><td><div class="firm">Advantage Special Inspection Inc.</div><div class="muted small">Alhambra</div></td><td><span class="tier tier-A">A</span> <span class="mono small">4</span></td><td>George Alonzo<div class="muted small">Owner</div></td><td class="small">support@advantagesi.com </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">No LinkedIn match. Email is the path.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">18</td><td><div class="firm">Deputy Inspection Services (Oscar Garcia)</div><div class="muted small">Pomona</div></td><td><span class="tier tier-A">A</span> <span class="mono small">4</span></td><td>Oscar E. Garcia<div class="muted small">Deputy Inspector / founder</div></td><td class="small">— <a href="https://www.linkedin.com/in/oscar-e-garcia-2203b3129" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Hospitals, schools, public works. COMMON NAME: confirm in-app. Email unknown.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">21</td><td><div class="firm">So Cal Deputy Inspections and Testing</div><div class="muted small">Los Angeles</div></td><td><span class="tier tier-A">A</span> <span class="mono small">4</span></td><td>Christian Coronel<div class="muted small">Founder</div></td><td class="small">— <a href="https://www.linkedin.com/in/christian-coronel-4a7a1a20a" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">ICC Master of Special Inspections; founded 2016. Thin footprint. Email unknown.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">23</td><td><div class="firm">Los Angeles Deputy Special Inspection</div><div class="muted small">Los Angeles</div></td><td><span class="tier tier-A">A</span> <span class="mono small">4</span></td><td>—<div class="muted small"></div></td><td class="small">info@losangelesdeputyspecialinspection.com </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">LADBS-focused small/mid projects. Owner name unknown: list builder to find.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">13</td><td><div class="firm">Sigala Inspection Services Inc.</div><div class="muted small">Downey</div></td><td><span class="tier tier-A">A</span> <span class="mono small">3</span></td><td>Jose Trinidad Sigala<div class="muted small">President</div></td><td class="small">— </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">No profile; do not target Derek Sigala (former employee). Email unknown.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">17</td><td><div class="firm">Deputy Inspection Service (Richard Roth)</div><div class="muted small">Long Beach</div></td><td><span class="tier tier-A">A</span> <span class="mono small">3</span></td><td>Richard Roth<div class="muted small">Inspector / consultant</div></td><td class="small">— <a href="https://www.linkedin.com/in/richard-roth-92b10716b" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">LOCATION MISMATCH flag (profile may show Grants Pass, OR). Sole proprietor. Not Oscar Garcia&#x27;s firm.</td></tr>
+<tr data-tier="A" data-status="new"><td class="mono">20</td><td><div class="firm">Southland Special Inspector</div><div class="muted small">Los Angeles</div></td><td><span class="tier tier-A">A</span> <span class="mono small">3</span></td><td>—<div class="muted small"></div></td><td class="small">DeputyInspector@Outlook.com </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Subsidiary of a CRE firm; FIT CHECK. No owner name.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">22</td><td><div class="firm">AllCity Deputy Inspections, Inc.</div><div class="muted small">Torrance</div></td><td><span class="tier tier-B">B</span> <span class="mono small">3</span></td><td>Julie San Roman<div class="muted small">President</div></td><td class="small">— <a href="https://www.linkedin.com/in/julie-san-roman-ba8aa1108" target="_blank" rel="noopener">in</a></td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">MBE/WBE certified; 24-hour dispatch. Website was down. Email unknown.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">27</td><td><div class="firm">Koury Engineering &amp; Testing, Inc.</div><div class="muted small">Gardena</div></td><td><span class="tier tier-B">B</span> <span class="mono small">3</span></td><td>—<div class="muted small"></div></td><td class="small">info@kouryengineering.com </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Close technical overlap; independent.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">30</td><td><div class="firm">MTGL, Inc.</div><div class="muted small">Anaheim</div></td><td><span class="tier tier-B">B</span> <span class="mono small">3</span></td><td>—<div class="muted small"></div></td><td class="small">info@mtglinc.com </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">100+ employees, three offices. Dispatch inbox exists.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">31</td><td><div class="firm">AESCO</div><div class="muted small">Huntington Beach</div></td><td><span class="tier tier-B">B</span> <span class="mono small">3</span></td><td>—<div class="muted small"></div></td><td class="small">— </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Deputy inspection + lab. Contact form only.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">33</td><td><div class="firm">Southwest Inspection &amp; Testing</div><div class="muted small">La Habra</div></td><td><span class="tier tier-B">B</span> <span class="mono small">3</span></td><td>—<div class="muted small"></div></td><td class="small">jacobg@southwesttesting.com </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Email from a municipal record; VERIFY.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">16</td><td><div class="firm">JJ Construction Consulting</div><div class="muted small">Pomona</div></td><td><span class="tier tier-B">B</span> <span class="mono small">2</span></td><td>—<div class="muted small"></div></td><td class="small">— </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Only a Procore listing. FIT CHECK. Lowest priority.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">24</td><td><div class="firm">Smith-Emery Laboratories, Inc.</div><div class="muted small">Los Angeles</div></td><td><span class="tier tier-B">B</span> <span class="mono small">2</span></td><td>—<div class="muted small"></div></td><td class="small">info@smithemery.com </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Long-established lab; public-sector work. Generic inbox only.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">26</td><td><div class="firm">Earth Systems Pacific</div><div class="muted small">Pasadena</div></td><td><span class="tier tier-B">B</span> <span class="mono small">2</span></td><td>—<div class="muted small"></div></td><td class="small">— </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Materials testing + special inspection; contact form only.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">28</td><td><div class="firm">Converse Consultants</div><div class="muted small">Monrovia</div></td><td><span class="tier tier-B">B</span> <span class="mono small">2</span></td><td>—<div class="muted small"></div></td><td class="small">converse@converseconsultants.com </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Multidisciplinary; geotech + SI.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">29</td><td><div class="firm">G3 Quality, Inc.</div><div class="muted small">Cerritos</div></td><td><span class="tier tier-B">B</span> <span class="mono small">2</span></td><td>—<div class="muted small"></div></td><td class="small">info@g3quality.com </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Public-works / transportation focus.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">32</td><td><div class="firm">Urban Testing &amp; Inspection, Inc.</div><div class="muted small">Torrance</div></td><td><span class="tier tier-B">B</span> <span class="mono small">2</span></td><td>—<div class="muted small"></div></td><td class="small">— </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">LADBS testing agency roster. No email found.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">34</td><td><div class="firm">Reliant Testing Engineers, Inc.</div><div class="muted small">Santa Ana</div></td><td><span class="tier tier-B">B</span> <span class="mono small">2</span></td><td>—<div class="muted small"></div></td><td class="small">— </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">HCAI pre-approved; contact form only.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">25</td><td><div class="firm">Twining, Inc.</div><div class="muted small">Long Beach</div></td><td><span class="tier tier-B">B</span> <span class="mono small">1</span></td><td>—<div class="muted small"></div></td><td class="small">— </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">150+ inspectors, seven labs. Too big for the first wave.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">35</td><td><div class="firm">GMU Geotechnical, Inc.</div><div class="muted small">Rancho Santa Margarita</div></td><td><span class="tier tier-B">B</span> <span class="mono small">1</span></td><td>—<div class="muted small"></div></td><td class="small">— </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Geotech-first; OC.</td></tr>
+<tr data-tier="B" data-status="new"><td class="mono">36</td><td><div class="firm">LGC Geotechnical, Inc.</div><div class="muted small">San Clemente</div></td><td><span class="tier tier-B">B</span> <span class="mono small">1</span></td><td>—<div class="muted small"></div></td><td class="small">info@lgcgeotechnical.com </td><td><span class="pill pill-muted">New</span></td><td class="mono small"></td><td class="small notes">Geotech-first; OC.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section class="card log" style="margin-top:16px">
+  <h2>Run log · latest first</h2>
+  <div><h3>2026-09-27 · build</h3><ul><li>Repo scaffold created. Buyers seeded: 45 firms (22 A, 14 B, 9 C excluded). Sources: LinkedIn drafts doc 2026-09-27, competitor landscape 2026-09-15.</li><li>Platform enrichment is owned by the team, not the night shift.</li></ul></div>
+</section>
+
+<footer>Data: night-shift/buyers.csv on branch claude/customer-acquisition-strategy-rn7eod. Generated 2026-09-27T13:32+03:30. Drafts live in Gmail; nothing is sent by the night shift.</footer>
+</div>
+
+<script>
+(function(){
+  var btns=document.querySelectorAll('#filters button');
+  var rows=document.querySelectorAll('#pipe tbody tr');
+  var replied=['replied_sample','replied_question','replied_pilot','pilot','customer','replied_no'];
+  var saved=null; try{saved=localStorage.getItem('pp-filter')}catch(e){}
+  function apply(f){
+    btns.forEach(function(b){b.setAttribute('aria-pressed', b.dataset.f===f ? 'true':'false')});
+    rows.forEach(function(r){
+      var show=true;
+      if(f==='all') show=true;
+      else if(f.indexOf('tier:')===0) show=r.dataset.tier===f.slice(5);
+      else if(f.indexOf('status:')===0) show=r.dataset.status===f.slice(7);
+      else if(f==='replied') show=replied.indexOf(r.dataset.status)>=0;
+      r.hidden=!show;
+    });
+    try{localStorage.setItem('pp-filter',f)}catch(e){}
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){apply(b.dataset.f)})});
+  apply(saved||'all');
+})();
+</script>

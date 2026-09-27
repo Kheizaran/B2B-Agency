@@ -1,0 +1,18 @@
+{
+  "generated_by": "build session 2026-09-27",
+  "night_run_at": null,
+  "morning_run_at": null,
+  "new_firms_tonight": 0,
+  "drafts_ready": [],
+  "replies_waiting": [],
+  "export_latest_name": "Central Control.xlsx (audit pack, 2026-09-27)",
+  "export_latest_date": "2026-09-18",
+  "export_note": "Live list refreshed Sep 18; filings Jan 2-16 only; web search run on 30 of 278. Team is re-running enrichment.",
+  "owner_actions": [
+    "Ali: buy aifirst-solutions.com and getaifirstsolutions.com, set up Workspace + SPF/DKIM/DMARC (asked 2026-09-22, no reply yet).",
+    "Ali: white-label copy of the platform without the customer name in the URL.",
+    "Team: re-extract from July 1 with a high limit, run bulk LADBS roles and bulk web search on all, export Excel, upload to Drive folder dejavu-samples.",
+    "You: send tonight's drafts from Gmail (10-20 a day). Say GO SEND here when you want this automated."
+  ],
+  "sending_mode": "drafts only"
+}
