@@ -35,13 +35,28 @@ touched = sum(by_status[s] for s in status_order if s not in ("new", "drafted"))
 replied = sum(by_status[s] for s in ("replied_sample", "replied_question", "replied_pilot", "pilot", "customer", "replied_no"))
 samples = by_status["replied_sample"] + by_status["replied_pilot"] + by_status["pilot"] + by_status["customer"]
 
-# LinkedIn 10 for today: A-tier with a person URL, not closed, rotate by day of year
-li_pool = [r for r in tierA if r["linkedin_person"].strip() and r["status"] not in ("replied_no", "bounced")]
-if li_pool:
-    k = today.timetuple().tm_yday % len(li_pool)
-    li_today = (li_pool[k:] + li_pool[:k])[:10]
-else:
-    li_today = []
+# LinkedIn messages: parsed from the newest pitch/*-linkedin-messages.md
+by_id = {r["id"]: r for r in rows}
+li_files = sorted((ROOT / "pitch").glob("*-linkedin-messages.md"))
+li_file = li_files[-1] if li_files else None
+li_templates, li_people = {}, []
+if li_file:
+    li_text = li_file.read_text(encoding="utf-8")
+    for n in ("1", "2"):
+        m = re.search(rf"^## Message {n}\b.*?\n(.*?)(?=^## |^---)", li_text, flags=re.M | re.S)
+        li_templates[n] = m.group(1).strip() if m else ""
+    for wave_m in re.finditer(r"^## Wave (\d)\b.*?\n(.*?)(?=^## |\Z)", li_text, flags=re.M | re.S):
+        wave = wave_m.group(1)
+        for block in re.split(r"^### ", wave_m.group(2), flags=re.M)[1:]:
+            head, _, body = block.partition("\n")
+            pid, _, rest = head.partition(" · ")
+            who, _, flag = rest.partition(". ")
+            url = next((l.strip() for l in body.splitlines() if l.strip().startswith("http")), "")
+            note = " ".join(l[2:].strip() for l in body.splitlines() if l.startswith("> "))
+            nm = re.match(r"Hi ([^,]+),", note)
+            first = nm.group(1) if nm else "there"
+            li_people.append({"id": pid.strip(), "wave": wave, "who": who.strip(), "flag": flag.strip(),
+                              "url": url, "note": note, "first": first, "row": by_id.get(pid.strip(), {})})
 
 # Follow-ups due today (owner hasn't sent, or night job will draft)
 def due(r, col):
@@ -67,7 +82,7 @@ entries = re.split(r"^## ", log_text, flags=re.M)[1:]
 log_tail = ["## " + e.strip() for e in entries[-6:]][::-1]
 
 def esc(s):
-    return html.escape(str(s or ""))
+    return html.escape("" if s is None else str(s))
 
 # ---------- render ----------
 STATUS_LABEL = {
@@ -88,9 +103,44 @@ def pill(status):
 def kpi(label, value, sub=""):
     return f'<div class="kpi"><div class="kpi-v">{esc(value)}</div><div class="kpi-l">{esc(label)}</div>{"<div class=kpi-s>"+esc(sub)+"</div>" if sub else ""}</div>'
 
-def li_item(r):
-    return (f'<li><a href="{esc(r["linkedin_person"])}" target="_blank" rel="noopener">{esc(r["contact_name"] or r["firm"])}</a>'
-            f' <span class="muted">· {esc(r["firm"])}, {esc(r["city"])}</span></li>')
+def copy_block(label, text, key):
+    return (f'<div class="msg"><div class="msg-h"><span>{esc(label)}</span>'
+            f'<span class="mono small muted">{len(text)} chars</span>'
+            f'<button type="button" class="copy" data-copy="{esc(key)}">Copy</button></div>'
+            f'<div class="msg-t" id="{esc(key)}">{esc(text)}</div></div>')
+
+def li_timing(p):
+    if p["wave"] == "1":
+        return '<span class="pill pill-accent">send today</span>'
+    r = p["row"]
+    if r.get("status") == "drafted":
+        return '<span class="pill pill-warn">wait: email not sent yet</span>'
+    ft = r.get("first_touch_date", "")
+    try:
+        after = (datetime.date.fromisoformat(ft) + datetime.timedelta(days=3)).isoformat()
+        return f'<span class="pill pill-info">from {esc(after)}</span>'
+    except ValueError:
+        return '<span class="pill pill-muted">after the email</span>'
+
+def li_person(p):
+    k = f'li{esc(p["id"])}'
+    m1 = li_templates.get("1", "").replace("{first_name}", p["first"])
+    m2 = li_templates.get("2", "").replace("{first_name}", p["first"])
+    flag = f'<p class="flag small">{esc(p["flag"])}</p>' if p["flag"] else ""
+    link = f'<a href="{esc(p["url"])}" target="_blank" rel="noopener">Open profile</a>' if p["url"] else ""
+    check = ' <span class="pill pill-warn">check first</span>' if p["flag"] else ""
+    return (f'<details class="li" data-id="{esc(p["id"])}"><summary>'
+            f'<label class="done"><input type="checkbox" data-done="{esc(p["id"])}"> sent</label>'
+            f'<span class="mono small muted">{esc(p["id"])}</span> <strong>{esc(p["who"])}</strong> {li_timing(p)}{check}</summary>'
+            f'<div class="li-body"><p class="small" style="margin:0 0 8px">{link}</p>{flag}'
+            f'{copy_block("Connection note (Connect → Add a note)", p["note"], k + "n")}'
+            f'{copy_block("Message 1: after they accept", m1, k + "a")}'
+            f'{copy_block("Message 2: day 5, no reply (last)", m2, k + "b")}'
+            f'</div></details>')
+
+def li_wave(w):
+    ps = [p for p in li_people if p["wave"] == w]
+    return "".join(li_person(p) for p in ps) if ps else '<p class="muted">None.</p>'
 
 def draft_item(d):
     url = d.get("viewUrl") or ""
@@ -179,7 +229,7 @@ h2{{font:600 17px/1.2 "IBM Plex Sans Condensed",sans-serif;margin:0 0 10px;text-
 .card{{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}}
 .card.alert{{border-left:5px solid var(--bad)}}
 .card.act{{border-left:5px solid var(--accent)}}
-ul{{margin:0;padding-left:18px}} li{{margin:6px 0}}
+ul{{margin:0;padding-left:18px}} li{{margin:6px 0;overflow-wrap:anywhere}}
 .kpis{{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:18px 0}}
 .kpi{{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px}}
 .kpi-v{{font:600 28px/1 "IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}}
@@ -204,6 +254,20 @@ tr[hidden]{{display:none}}
 .log{{font-size:13px}} .log h3{{font:600 14px "IBM Plex Sans Condensed",sans-serif;margin:12px 0 4px}}
 .log ul{{color:var(--muted)}}
 footer{{margin-top:24px;color:var(--muted);font-size:12.5px}}
+.wave{{font:600 14px "IBM Plex Sans Condensed",sans-serif;margin:0 0 8px}}
+details.li{{border:1px solid var(--line);border-radius:var(--radius);margin:0 0 8px;background:var(--surface)}}
+details.li summary{{cursor:pointer;padding:10px 12px;display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;list-style:none}}
+details.li summary::-webkit-details-marker{{display:none}}
+details.li[open] summary{{border-bottom:1px solid var(--line)}}
+details.li.is-done summary strong{{text-decoration:line-through;color:var(--muted)}}
+.done{{font-size:12px;color:var(--muted);display:inline-flex;gap:4px;align-items:center}}
+.li-body{{padding:10px 12px}}
+.flag{{background:var(--warn-bg);color:var(--warn);padding:6px 10px;border-radius:4px;margin:0 0 10px}}
+.msg{{margin:0 0 10px}}
+.msg-h{{display:flex;gap:8px;align-items:center;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:4px}}
+.msg-h span:first-child{{flex:1}}
+.msg-t{{white-space:pre-wrap;background:var(--surface-2);border-radius:4px;padding:8px 10px;font-size:13.5px}}
+.copy{{background:var(--accent);color:var(--accent-ink);border:0;border-radius:4px;padding:3px 10px;font:500 12px "IBM Plex Sans",sans-serif;cursor:pointer;text-transform:none;letter-spacing:0}}
 @media (prefers-reduced-motion: no-preference){{ .filters button{{transition:background .15s}} }}
 </style>
 
@@ -230,10 +294,14 @@ footer{{margin-top:24px;color:var(--muted);font-size:12.5px}}
     <h2>Replies waiting · {len(replies_waiting)}</h2>
     {"<ul>" + "".join(reply_item(d) for d in replies_waiting) + "</ul>" if replies_waiting else '<p class="muted">No new replies. The morning job checks Gmail at 07:00 Tehran.</p>'}
   </div>
-  <div class="card">
-    <h2>LinkedIn today · {len(li_today)} of 10</h2>
-    <p class="small muted" style="margin:0 0 8px">Send the connection note from the 2026-09-27 drafts doc. Verify the profile in-app first. Space 3+ days from the email touch.</p>
-    {"<ol>" + "".join(li_item(r) for r in li_today) + "</ol>" if li_today else '<p class="muted">No A-tier profiles left in rotation.</p>'}
+</section>
+
+<section class="card act" style="margin-top:16px" id="linkedin">
+  <h2>LinkedIn messages · {len(li_people)} people</h2>
+  <p class="small muted" style="margin:0 0 10px">Send by hand from your LinkedIn. Tap a name, open the profile, then Connect → Add a note → paste. When they accept, send Message 1; if no reply in 5 days, send Message 2. The "sent" tick is saved only in this browser, so tell Claude who you sent to. Source: {esc(li_file.name if li_file else "none")}</p>
+  <div class="grid grid-2">
+    <div><h3 class="wave">Wave 1 · first touch, send today</h3>{li_wave("1")}</div>
+    <div><h3 class="wave">Wave 2 · 3+ days after their email is sent</h3>{li_wave("2")}</div>
   </div>
 </section>
 
@@ -296,6 +364,27 @@ footer{{margin-top:24px;color:var(--muted);font-size:12.5px}}
   }}
   btns.forEach(function(b){{b.addEventListener('click',function(){{apply(b.dataset.f)}})}});
   apply(saved||'all');
+
+  document.querySelectorAll('button.copy').forEach(function(b){{
+    b.addEventListener('click',function(e){{
+      e.preventDefault();
+      var el=document.getElementById(b.dataset.copy); if(!el) return;
+      var t=el.textContent;
+      function ok(){{b.textContent='Copied'; setTimeout(function(){{b.textContent='Copy'}},1500)}}
+      function fallback(){{var r=document.createRange(); r.selectNodeContents(el); var s=window.getSelection(); s.removeAllRanges(); s.addRange(r); try{{document.execCommand('copy'); ok()}}catch(x){{b.textContent='Select + copy'}}}}
+      try{{navigator.clipboard.writeText(t).then(ok,fallback)}}catch(x){{fallback()}}
+    }});
+  }});
+  var done={{}}; try{{done=JSON.parse(localStorage.getItem('pp-li-done')||'{{}}')}}catch(e){{done={{}}}}
+  document.querySelectorAll('input[data-done]').forEach(function(c){{
+    var id=c.dataset.done, d=c.closest('details');
+    c.checked=!!done[id]; d.classList.toggle('is-done',c.checked);
+    c.addEventListener('click',function(e){{e.stopPropagation()}});
+    c.addEventListener('change',function(){{
+      done[id]=c.checked; d.classList.toggle('is-done',c.checked);
+      try{{localStorage.setItem('pp-li-done',JSON.stringify(done))}}catch(e){{}}
+    }});
+  }});
 }})();
 </script>
 """

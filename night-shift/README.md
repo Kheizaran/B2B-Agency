@@ -81,7 +81,7 @@ For rows with `status=drafted`: search Gmail `to:<email> in:sent newer_than:14d`
 
 ### Part 4 — brief and dashboard
 1. Compute `owner_actions` in state: things only the owner can do. Always include unresolved items from the previous state unless the evidence shows they're done. Standing items until cleared: Ali's cold-email domain and Workspace (no reply as of 2026-09-27), the white-label copy of the platform, and the enrichment export freshness.
-2. `linkedin_today`: the script picks 10 A-tier rows with a `linkedin_person` and status not in `replied_no`/`bounced`/`excluded`, rotating by day of year. Nothing to do here; just make sure the CSV is current.
+2. LinkedIn: the dashboard shows the newest `pitch/*-linkedin-messages.md` (connection note, message 1, message 2 per person; Wave 2 shows "wait" until that row's email is sent). Nothing to do here; just make sure the CSV is current.
 3. Update state (`morning_run_at`, `replies_waiting`, `drafts_ready`), append `log.md`, run `python3 dashboard/build_dashboard.py`, publish the dashboard to the same URL, commit, push.
 4. Create one Gmail draft to kheizaran.karampoor@gmail.com with subject `inbox` and one line per owner action and per reply waiting (this is the owner's capture rule). If there is nothing new, skip the draft.
 
