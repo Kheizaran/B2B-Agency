@@ -29,11 +29,6 @@ Hi {first_name}, one more thing the feed catches that bid boards miss: 2025 wild
 
 ## Wave 1: send today (no email draft yet, so LinkedIn is the first touch)
 
-### 5 · Chad Brummel, President, Deputy 1 Inspection Service
-https://www.linkedin.com/in/chad-brummel-b4142b165
-
-> Hi Chad, 30+ years of deputy inspection in SoCal is a long run. I built a feed of LA permits caught at plan check, with the engineer of record named, for inspection firms that want to reach a project before the GC picks an agency. Would be glad to connect.
-
 ### 11 · Nathan Haley, Owner, Magnum Deputy Inspections
 https://www.linkedin.com/in/nathan-haley-58626951
 
@@ -103,6 +98,7 @@ https://www.linkedin.com/in/raymundomachado
 ---
 
 ## Not included, and why
+- **5 Chad Brummel (Deputy 1):** the profile at the URL we had shows no company, a Laguna Niguel location and a quote as headline (owner checked 2026-09-28). Not confirmed as Deputy 1's president, so removed. Email path only (admin@deputy1.com, VERIFY).
 - **17 Richard Roth:** his profile may show Grants Pass, Oregon (location mismatch).
 - **18 Oscar Garcia:** common name, and his work is hospitals, schools and public works, which our residential-heavy data doesn't fit.
 - **22 AllCity, 46 JLI, 47 Area 4:** tier B, held until the first pilot.
