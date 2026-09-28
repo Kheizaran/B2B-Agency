@@ -9,6 +9,8 @@ Sent by hand from the owner's LinkedIn. Nothing here is sent automatically. Fact
 4. If they reply "sample", tell me and I'll prepare the sample hand-off.
 5. After sending, write the date in `buyers.csv`, or just tell me who you sent to.
 
+Links checked by web search on 2026-09-28: each remaining profile's headline names the firm. Still glance at the profile before you connect.
+
 Order: send Wave 1 today. Send Wave 2 only 3+ days after that person's email goes out, so email and LinkedIn don't land on the same day (rule from `buyers.csv` row 1).
 
 ---
@@ -28,11 +30,6 @@ Hi {first_name}, one more thing the feed catches that bid boards miss: 2025 wild
 ---
 
 ## Wave 1: send today (no email draft yet, so LinkedIn is the first touch)
-
-### 11 · Nathan Haley, Owner, Magnum Deputy Inspections
-https://www.linkedin.com/in/nathan-haley-58626951
-
-> Hi Nathan, I came across Magnum, a veteran-owned firm with 15+ years across LA and OC. I built a feed of LA permits caught at plan check, with the engineer of record named, so inspection firms reach a project before the GC picks an agency. Would be glad to connect.
 
 ### 19 · Matthew Fisher, Vice President, Fisher Inspection Services
 https://www.linkedin.com/in/matthewfisher81
@@ -54,7 +51,7 @@ https://www.linkedin.com/in/darren-lettermam-aaa045125
 
 > Hi Darren, I came across DRL Inspection Services. I built a feed of LA permits caught at plan check, with the engineer of record named, so special-inspection firms reach a project before the GC picks an agency. Would be glad to connect.
 
-### 7 · Edwin Jimenez, Business Owner, ERJ Inspections. Check first: the URL came from a search summary, so confirm the profile says ERJ before you send.
+### 7 · Edwin Jimenez, Business Owner, ERJ Inspections
 https://www.linkedin.com/in/edwin-jimenez-1a2965196
 
 > Hi Edwin, I came across ERJ Inspections. I built a feed of LA permits caught at plan check, with the engineer of record named, so special-inspection firms reach a project before the GC picks an agency. Would be glad to connect.
@@ -90,14 +87,11 @@ https://www.linkedin.com/in/travis-archuleta-a1a022185
 
 > Hi Travis, I sent you a short email about a feed of LA permits caught at plan check, with the engineer of record named. Archuleta's residential and commercial structural mix seemed a good fit. Would be glad to connect.
 
-### 10 · Ray Machado, President, Axiom Inspection Services
-https://www.linkedin.com/in/raymundomachado
-
-> Hi Ray, I sent Axiom a short email about a feed of LA City and Santa Monica permits caught at plan check, with the engineer of record named. You cover both cities, so it seemed a fit. Would be glad to connect.
-
 ---
 
 ## Not included, and why
+- **11 Nathan Haley (Magnum):** the profile we had is a security officer in Missouri (owner checked 2026-09-28). Wrong person, removed.
+- **10 Ray Machado (Axiom):** the link could not be confirmed by search, removed. His email is on Axiom's site (ray@goaxiom.com, VERIFY).
 - **5 Chad Brummel (Deputy 1):** the profile at the URL we had shows no company, a Laguna Niguel location and a quote as headline (owner checked 2026-09-28). Not confirmed as Deputy 1's president, so removed. Email path only (admin@deputy1.com, VERIFY).
 - **17 Richard Roth:** his profile may show Grants Pass, Oregon (location mismatch).
 - **18 Oscar Garcia:** common name, and his work is hospitals, schools and public works, which our residential-heavy data doesn't fit.
