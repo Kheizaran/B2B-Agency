@@ -3,7 +3,7 @@
 Sent by hand from the owner's LinkedIn. Nothing here is sent automatically. Facts in each note come only from `buyers.csv` notes.
 
 ## How to use
-1. Open the profile, click **Connect**, then **Add a note**, and paste the connection note. Each note is 300 characters or fewer, which is LinkedIn's limit.
+1. Open the profile, click **Connect**, then **Add a note**, and paste the connection note. Each note is 200 characters or fewer, which is LinkedIn's limit for free accounts.
 2. When they accept, send **Message 1** in the chat.
 3. If there's no reply after 5 days, send **Message 2**. Stop there.
 4. If they reply "sample", tell me and I'll prepare the sample hand-off.
@@ -34,32 +34,32 @@ Hi {first_name}, one more thing the feed catches that bid boards miss: 2025 wild
 ### 19 · Matthew Fisher, Vice President, Fisher Inspection Services
 https://www.linkedin.com/in/matthewfisher81
 
-> Hi Matthew, I saw your jobsite posts, including Jordan Downs. I built a feed of LA permits caught at plan check, with the engineer of record named, so inspection firms reach a project before the GC picks an agency. Would be glad to connect.
+> Hi Matthew, saw your Jordan Downs jobsite posts. I built a feed of LA permits caught at plan check, with the engineer of record named, so inspection firms reach projects before the GC picks an agency.
 
 ### 21 · Christian Coronel, Founder, So Cal Deputy Inspections and Testing
 https://www.linkedin.com/in/christian-coronel-4a7a1a20a
 
-> Hi Christian, congrats on building So Cal Deputy since 2016, and on the ICC Master of Special Inspections. I built a feed of LA permits caught at plan check, with the engineer of record named, for firms that want new work early. Would be glad to connect.
+> Hi Christian, congrats on So Cal Deputy and the ICC Master of Special Inspections. I built a feed of LA permits caught at plan check, with the engineer of record named. Glad to connect.
 
 ### 9 · Grace Inspection & Testing (Wahba Isaac, Owner). The profile is branded as the company.
 https://www.linkedin.com/in/grace-inspection-and-testing-511840276
 
-> Hi, I saw Grace is hiring ICC soils inspectors, so it sounds like you're growing. I built a feed of LA permits caught at plan check, with the engineer of record named, so inspection firms reach a project before the GC picks an agency. Would be glad to connect.
+> Hi, saw Grace is hiring ICC soils inspectors, so you're growing. I built a feed of LA permits caught at plan check, with the engineer of record named, so firms reach projects early. Glad to connect.
 
 ### 12 · Darren Lettermam, President and CEO, DRL Inspection Services
 https://www.linkedin.com/in/darren-lettermam-aaa045125
 
-> Hi Darren, I came across DRL Inspection Services. I built a feed of LA permits caught at plan check, with the engineer of record named, so special-inspection firms reach a project before the GC picks an agency. Would be glad to connect.
+> Hi Darren, I came across DRL Inspection Services. I built a feed of LA permits caught at plan check, with the engineer of record named, so inspection firms reach projects before the GC picks one.
 
 ### 7 · Edwin Jimenez, Business Owner, ERJ Inspections
 https://www.linkedin.com/in/edwin-jimenez-1a2965196
 
-> Hi Edwin, I came across ERJ Inspections. I built a feed of LA permits caught at plan check, with the engineer of record named, so special-inspection firms reach a project before the GC picks an agency. Would be glad to connect.
+> Hi Edwin, I came across ERJ Inspections. I built a feed of LA permits caught at plan check, with the engineer of record named, so inspection firms reach projects before the GC picks an agency.
 
 ### 14 · John Laramie, Vice President, Structural Observation Group. Fit check: their work is commercial (South Coast Plaza, Greek Theatre), and our data is mostly residential. Send only if you're OK with that.
 https://www.linkedin.com/in/john-laramie-647836100
 
-> Hi John, I've seen SOG's commercial work, South Coast Plaza and the Greek Theatre. I built a feed of LA permits caught at plan check, with the engineer of record named, so inspection firms reach a project before the GC picks an agency. Would be glad to connect.
+> Hi John, I've seen SOG's work at South Coast Plaza and the Greek Theatre. I built a feed of LA permits caught at plan check, with the engineer of record named. Glad to connect.
 
 ---
 
@@ -70,22 +70,22 @@ The connection note is short here because they've already seen the email.
 ### 1 · Juan Carlos Ramos, Owner, JCR Inspection Services
 https://www.linkedin.com/in/juan-carlos-ramos-34414827
 
-> Hi Juan Carlos, I sent you a short email about a feed of LA permits caught at plan check, with the engineer of record named. A deputy inspector since 1994 has seen a lot of lead sources, so I'd value your take. Would be glad to connect.
+> Hi Juan Carlos, I emailed you about a feed of LA permits caught at plan check, with the engineer of record named. A deputy inspector since 1994 has seen every lead source; I'd value your take.
 
 ### 3 · Elite Special Inspections (Randy Martinez, Owner). The profile is branded as the company.
 https://www.linkedin.com/in/elite-special-inspection
 
-> Hi Randy, I sent Elite a short email about a feed of LA permits caught at plan check, with the engineer of record named. With your LADBS, County and OC coverage, it seemed a fit. Would be glad to connect.
+> Hi Randy, I emailed Elite about a feed of LA permits caught at plan check, with the engineer of record named. With your LADBS, County and OC coverage, it seemed a fit. Glad to connect.
 
 ### 4 · Se (Jamie) Shim, Business Owner, K-Special Inspection
 https://www.linkedin.com/in/se-jamie-shim-36292347
 
-> Hi Jamie, I sent you a short email about a feed of LA permits caught at plan check, with the engineer of record named. K-Special has covered LA, Long Beach and OC since 1993, so it seemed a fit. Would be glad to connect.
+> Hi Jamie, I emailed you about a feed of LA permits caught at plan check, with the engineer of record named. K-Special covers LA, Long Beach and OC, so it seemed a fit. Glad to connect.
 
 ### 6 · Travis Archuleta, Owner, Archuleta Inspections
 https://www.linkedin.com/in/travis-archuleta-a1a022185
 
-> Hi Travis, I sent you a short email about a feed of LA permits caught at plan check, with the engineer of record named. Archuleta's residential and commercial structural mix seemed a good fit. Would be glad to connect.
+> Hi Travis, I emailed you about a feed of LA permits caught at plan check, with the engineer of record named. Archuleta's structural mix seemed a good fit. Glad to connect.
 
 ---
 
